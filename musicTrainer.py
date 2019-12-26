@@ -31,17 +31,23 @@ class NoteQueue():
 
 class Application(tk.Frame):
     def __init__(self, master=None):
+        """
+        constructor for the Application class
+        """
         tk.Frame.__init__(self, master)
         self.master = master
         self.queue = NoteQueue()
         self.initWindow()
 
     def initWindow(self):
+        """
+        set up the window
+        """
         self.master.title("Music Trainer")
         self.pack(fill='both', expand=1)
 
         # creates the quit button
-        self.quitButton = tk.Button(self, text='Quit', command=quit)
+        self.quitButton = tk.Button(self, text='Quit', command=self.quit)
         self.quitButton.place(x=5, y=5)
 
         # # creates the play note button
@@ -52,7 +58,6 @@ class Application(tk.Frame):
         self.playNextButton = tk.Button(self, text='Play Next', command=self.queue.next)
         self.playNextButton.place(x=115, y=5)
 
-
         # CREATES BUTTONS - can't use a loop or the event handlers will default to G# (notes[11])
         # since the callback isn't dynamic, so unfortunately must be hard coded
 
@@ -61,8 +66,9 @@ class Application(tk.Frame):
         # i = 11 when the loop ends, and in python i can still be accessed out of scope, so each
         # event handler routes to G# event handler
         # for i in range(len(notes)):
-        #     self.buttons[notes[i]] = tk.Button(self, text=notes[i], font='Courier 12', bg=buttonBkg,
-        #                                         command=lambda: self.noteButtonPressed(notes[i]))
+        #     self.buttons[notes[i]] = tk.Button(self, text=notes[i], font='Courier 12',
+        #                                        bg=buttonBkg,
+        #                                        command=lambda: self.noteButtonPressed(notes[i]))
         #     self.buttons[notes[i]].place(x=5 + (50*i), y=200)
 
         # A button
@@ -125,13 +131,17 @@ class Application(tk.Frame):
                                             command=lambda: self.noteButtonPressed(notes[11]))
         self.buttons[notes[11]].place(x=555, y=200)
 
-
     def noteButtonPressed(self, buttonNote):
+        """
+        called when a note button is pressed, if the button is correct, turn the button green.
+        If the button is incorrect, turn it red and disable it
+
+        :param buttonNote: the note on the button that was pressed
+        """
         print('{} button pressed'.format(buttonNote))
         # if correct -> enable playNextButton, turn all buttons to grey
         if self.queue.note == buttonNote:
             self.buttons[buttonNote].config(bg='green')
-
 
             # self.playNextButton.config(state='normal')
             # for b in self.buttons.values():
@@ -143,30 +153,11 @@ class Application(tk.Frame):
         else:
             self.buttons[buttonNote].config(bg='#ff3348', state='disabled', fg='white')
 
-
-    def playButtonPressed(self, buttons):
-        for b in buttons.values():
-            b.config(state='active')
-
-        index = randint(0, 11)
-        self.note = notes[index]
-        print(note)
-
-
-def quit():
-    """
-    eventhandler for the quit button - quits the application
-    """
-    exit()
-
-
-def play(note):
-    """
-    plays a note
-
-    :param note: the note to play
-    """
-    print(note)
+    def quit(self):
+        """
+        called when the quit button is pressed, exits the program
+        """
+        exit()
 
 
 def main():
