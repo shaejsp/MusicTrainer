@@ -1,8 +1,6 @@
 import tkinter as tk
 from random import randint
 
-from pprint import pprint
-
 global notes
 notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 
@@ -12,17 +10,18 @@ buttonBkg = '#c4c4c4'
 
 class NoteQueue():
     def __init__(self):
-        self.note = 'C'  # sets the base note to C
+        self.note = 'Unassigned'
+        self.next()  # randomly assigns first note
 
     def play(self):
         """
-        plays a note
+        play a note
         """
         print('playing: {n}'.format(n=self.note))
 
     def next(self):
         """
-        gets a random note from the list of notes and play it
+        get a random note from the list of notes and play it
         """
         pos = randint(0, 11)
         self.note = notes[pos]
@@ -55,7 +54,8 @@ class Application(tk.Frame):
         self.playButton.place(x=45, y=5)
 
         # creates the play next button
-        self.playNextButton = tk.Button(self, text='Play Next', command=self.queue.next)
+        self.playNextButton = tk.Button(self, text='Play Next', state='disabled',
+                                        command=self.playNextPressed)
         self.playNextButton.place(x=115, y=5)
 
         # CREATES BUTTONS - can't use a loop or the event handlers will default to G# (notes[11])
@@ -139,19 +139,26 @@ class Application(tk.Frame):
         :param buttonNote: the note on the button that was pressed
         """
         print('{} button pressed'.format(buttonNote))
-        # if correct -> enable playNextButton, turn all buttons to grey
+        # if correct -> enable playNextButton, reset colors for all buttons
         if self.queue.note == buttonNote:
             self.buttons[buttonNote].config(bg='green')
-
-            # self.playNextButton.config(state='normal')
-            # for b in self.buttons.values():
-            #     if b['bg'] != buttonBkg:
-            #         b.config(bg=buttonBkg)
-            #     if b['state'] != 'normal':
-            #         b.config(state='normal')
-        # else turn that button red
+            self.playNextButton.config(state='normal')
+        # else turn the pressed button red
         else:
-            self.buttons[buttonNote].config(bg='#ff3348', state='disabled', fg='white')
+            self.buttons[buttonNote].config(bg='red', state='disabled')
+
+    def playNextPressed(self):
+        """
+        called when the play next button is pressed, resets all of the note buttons and
+        calls queue.next()
+        """
+        for b in self.buttons.values():
+            if b['bg'] != buttonBkg:
+                b.config(bg=buttonBkg)
+            if b['state'] != 'normal':
+                b.config(state='normal')
+        self.queue.next()
+        self.playNextButton.config(state='disabled')
 
     def quit(self):
         """
