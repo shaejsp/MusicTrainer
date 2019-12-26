@@ -1,24 +1,16 @@
 import tkinter as tk
 from random import randint
 
+from pprint import pprint
+
 global notes
 notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 
-
-class myButton(tk.Button):
-    """ adds the note field to tkinter buttons """
-    def __init__(self, parent, note, *args, **kwargs):
-        tk.Button.__init__(self, parent, *args, **kwargs)
-        self.note = note
-
-    def pressed(self, event):
-        """
-        event handler for when a button with a note on it is pressed - prints the note
-        """
-        print(self.note)
+global buttonBkg
+buttonBkg = '#c4c4c4'
 
 
-class noteQueue():
+class NoteQueue():
     def __init__(self):
         self.note = 'C'  # sets the base note to C
 
@@ -35,6 +27,130 @@ class noteQueue():
         pos = randint(0, 11)
         self.note = notes[pos]
         self.play()
+
+
+class Application(tk.Frame):
+    def __init__(self, master=None):
+        tk.Frame.__init__(self, master)
+        self.master = master
+        self.queue = NoteQueue()
+        self.initWindow()
+
+    def initWindow(self):
+        self.master.title("Music Trainer")
+        self.pack(fill='both', expand=1)
+
+        # creates the quit button
+        self.quitButton = tk.Button(self, text='Quit', command=quit)
+        self.quitButton.place(x=5, y=5)
+
+        # # creates the play note button
+        self.playButton = tk.Button(self, text='Play Note', command=self.queue.play)
+        self.playButton.place(x=45, y=5)
+
+        # creates the play next button
+        self.playNextButton = tk.Button(self, text='Play Next', command=self.queue.next)
+        self.playNextButton.place(x=115, y=5)
+
+
+        # CREATES BUTTONS - can't use a loop or the event handlers will default to G# (notes[11])
+        # since the callback isn't dynamic, so unfortunately must be hard coded
+
+        self.buttons = {}
+
+        # i = 11 when the loop ends, and in python i can still be accessed out of scope, so each
+        # event handler routes to G# event handler
+        # for i in range(len(notes)):
+        #     self.buttons[notes[i]] = tk.Button(self, text=notes[i], font='Courier 12', bg=buttonBkg,
+        #                                         command=lambda: self.noteButtonPressed(notes[i]))
+        #     self.buttons[notes[i]].place(x=5 + (50*i), y=200)
+
+        # A button
+        self.buttons[notes[0]] = tk.Button(self, text=notes[0], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[0]))
+        self.buttons[notes[0]].place(x=5, y=200)
+
+        # A# button
+        self.buttons[notes[1]] = tk.Button(self, text=notes[1], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[1]))
+        self.buttons[notes[1]].place(x=55, y=200)
+
+        # B button
+        self.buttons[notes[2]] = tk.Button(self, text=notes[2], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[2]))
+        self.buttons[notes[2]].place(x=105, y=200)
+
+        # C button
+        self.buttons[notes[3]] = tk.Button(self, text=notes[3], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[3]))
+        self.buttons[notes[3]].place(x=155, y=200)
+
+        # C# button
+        self.buttons[notes[4]] = tk.Button(self, text=notes[4], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[4]))
+        self.buttons[notes[4]].place(x=205, y=200)
+
+        # D button
+        self.buttons[notes[5]] = tk.Button(self, text=notes[5], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[5]))
+        self.buttons[notes[5]].place(x=255, y=200)
+
+        # D# button
+        self.buttons[notes[6]] = tk.Button(self, text=notes[6], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[6]))
+        self.buttons[notes[6]].place(x=305, y=200)
+
+        # E button
+        self.buttons[notes[7]] = tk.Button(self, text=notes[7], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[7]))
+        self.buttons[notes[7]].place(x=355, y=200)
+
+        # F button
+        self.buttons[notes[8]] = tk.Button(self, text=notes[8], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[8]))
+        self.buttons[notes[8]].place(x=405, y=200)
+
+        # F# button
+        self.buttons[notes[9]] = tk.Button(self, text=notes[9], font='Courier 12', bg=buttonBkg,
+                                           command=lambda: self.noteButtonPressed(notes[9]))
+        self.buttons[notes[9]].place(x=455, y=200)
+
+        # G button
+        self.buttons[notes[10]] = tk.Button(self, text=notes[10], font='Courier 12', bg=buttonBkg,
+                                            command=lambda: self.noteButtonPressed(notes[10]))
+        self.buttons[notes[10]].place(x=505, y=200)
+
+        # G# button
+        self.buttons[notes[11]] = tk.Button(self, text=notes[11], font='Courier 12', bg=buttonBkg,
+                                            command=lambda: self.noteButtonPressed(notes[11]))
+        self.buttons[notes[11]].place(x=555, y=200)
+
+
+    def noteButtonPressed(self, buttonNote):
+        print('{} button pressed'.format(buttonNote))
+        # if correct -> enable playNextButton, turn all buttons to grey
+        if self.queue.note == buttonNote:
+            self.buttons[buttonNote].config(bg='green')
+
+
+            # self.playNextButton.config(state='normal')
+            # for b in self.buttons.values():
+            #     if b['bg'] != buttonBkg:
+            #         b.config(bg=buttonBkg)
+            #     if b['state'] != 'normal':
+            #         b.config(state='normal')
+        # else turn that button red
+        else:
+            self.buttons[buttonNote].config(bg='#ff3348', state='disabled', fg='white')
+
+
+    def playButtonPressed(self, buttons):
+        for b in buttons.values():
+            b.config(state='active')
+
+        index = randint(0, 11)
+        self.note = notes[index]
+        print(note)
 
 
 def quit():
@@ -54,36 +170,11 @@ def play(note):
 
 
 def main():
-    root = tk.Tk()
-    root.title('Music Trainer')
-    root.geometry("700x500")
-
-    buttons = []
-
-    queue = noteQueue()  # handles playing a random note
-
-    # adds all of the buttons to the list
-    for i in range(len(notes)):
-        b = myButton(root, notes[i], text='{n:^3s}'.format(n=notes[i]), font='Courier 12',
-                     bg='#c4c4c4')
-        b.bind('<Button-1>', b.pressed)  # adds event handler
-        b.place(x=50*i+5, y=200)
-        buttons.append(b)
-
-    # creates the quit button
-    quitButton = tk.Button(root, text='Quit', command=quit)
-    quitButton.place(x=5, y=5)
-
-    # creates the play note button
-    playButton = tk.Button(root, text='Play Note', command=queue.play)
-    playButton.place(x=45, y=5)
-
-    # creates the play next button
-    playNextButton = tk.Button(root, text='Play Next', command=queue.next)
-    playNextButton.place(x=115, y=5)
-
     # runs the main app
-    root.mainloop()
+    root = tk.Tk()
+    root.geometry("700x500")  # sets size
+    app = Application(master=root)
+    app.mainloop()
 
 
 if __name__ == '__main__':
