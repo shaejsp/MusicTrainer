@@ -141,8 +141,10 @@ class Application(tk.Frame):
         print('{} button pressed'.format(buttonNote))
         # if correct -> enable playNextButton, reset colors for all buttons
         if self.queue.note == buttonNote:
-            self.buttons[buttonNote].config(bg='green')
             self.playNextButton.config(state='normal')
+            for b in self.buttons.values():
+                b.config(state='disabled')
+            self.buttons[buttonNote].config(bg='green', state='normal')
         # else turn the pressed button red
         else:
             self.buttons[buttonNote].config(bg='red', state='disabled')
