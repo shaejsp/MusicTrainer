@@ -70,12 +70,13 @@ class Application(tk.Frame):
         logo.place(x=20, y=20)
 
         # creates the quit button
-        self.quitButton = tk.Button(self, text='Quit', font=font, width=int(buttonWidth/2), bg=redBkg, command=self.quit)
+        self.quitButton = tk.Button(self, text='Quit', font=font, width=int(buttonWidth/2), 
+                                    bg=redBkg, command=self.quit)
         self.quitButton.place(x=620, y=20)
 
         # # creates the play note button
-        self.playButton = tk.Button(self, text='Play Note', bg=blueButton, font=font, width=buttonWidth,
-                                    height=2, command=self.queue.play)
+        self.playButton = tk.Button(self, text='Play Note', bg=blueButton, font=font, 
+                                    width=buttonWidth, height=2, command=self.queue.play)
         self.playButton.place(x=20, y=100)
 
         # creates the play next button
@@ -168,6 +169,16 @@ class Application(tk.Frame):
                                             command=lambda: self.noteButtonPressed(notes[11]),
                                            width=buttonWidth)
         self.buttons[notes[11]].place(x=140, y=420)
+
+        # deals with the optional includes
+        includeLabel = tk.Label(self, text='Include', font=font + ' bold')
+        includeLabel.place(x=400, y=100)
+
+        notesLabel = tk.Label(self, text='Notes', font=font)
+        notesLabel.place(x=400, y=120)
+
+        octavesLabel = tk.Label(self, text='Octaves', font=font)
+        octavesLabel.place(x=520, y=120)
 
     def noteButtonPressed(self, buttonNote):
         """
