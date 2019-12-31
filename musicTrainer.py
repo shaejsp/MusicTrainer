@@ -1,6 +1,18 @@
 import tkinter as tk
 from random import randint
 
+"""
+TODO:
+ - implement tracking for how many they got right
+ - add ability to choose which notes you want to practice
+ - add ability to limit to one octave, 3 octaves, 5, or 7 (acts as a multiplier for score)
+ - actually implement the sound playing
+ - MAYBE: add notes from guitar -> would be better as another
+    proj for guessing where the notes go on the fretboard
+ - MAYBE: add notes from bass guitar -> would be better as another
+    proj for guessing where the notes go on the fretboard
+ """
+
 global notes
 notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 
@@ -50,13 +62,15 @@ class Application(tk.Frame):
         self.quitButton.place(x=5, y=5)
 
         # # creates the play note button
-        self.playButton = tk.Button(self, text='Play Note', command=self.queue.play)
-        self.playButton.place(x=45, y=5)
+        self.playButton = tk.Button(self, text='Play Note',  font='Courier 12', width=10,
+                                    height=2, command=self.queue.play)
+        self.playButton.place(x=20, y=100)
 
         # creates the play next button
-        self.playNextButton = tk.Button(self, text='Play Next', state='disabled',
+        self.playNextButton = tk.Button(self, text='Play Next', font='Courier 12',
+                                        state='disabled', width=10, height=2,
                                         command=self.playNextPressed)
-        self.playNextButton.place(x=115, y=5)
+        self.playNextButton.place(x=140, y=100)
 
         # CREATES BUTTONS - can't use a loop or the event handlers will default to G# (notes[11])
         # since the callback isn't dynamic, so unfortunately must be hard coded
@@ -73,63 +87,75 @@ class Application(tk.Frame):
 
         # A button
         self.buttons[notes[0]] = tk.Button(self, text=notes[0], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[0]))
-        self.buttons[notes[0]].place(x=5, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[0]),
+                                           width=10)
+        self.buttons[notes[0]].place(x=20, y=180)
 
         # A# button
         self.buttons[notes[1]] = tk.Button(self, text=notes[1], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[1]))
-        self.buttons[notes[1]].place(x=55, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[1]),
+                                           width=10)
+        self.buttons[notes[1]].place(x=140, y=180)
 
         # B button
         self.buttons[notes[2]] = tk.Button(self, text=notes[2], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[2]))
-        self.buttons[notes[2]].place(x=105, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[2]),
+                                           width=10)
+        self.buttons[notes[2]].place(x=20, y=220)
 
         # C button
         self.buttons[notes[3]] = tk.Button(self, text=notes[3], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[3]))
-        self.buttons[notes[3]].place(x=155, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[3]),
+                                           width=10)
+        self.buttons[notes[3]].place(x=20, y=260)
 
         # C# button
         self.buttons[notes[4]] = tk.Button(self, text=notes[4], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[4]))
-        self.buttons[notes[4]].place(x=205, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[4]),
+                                           width=10)
+        self.buttons[notes[4]].place(x=140, y=260)
 
         # D button
         self.buttons[notes[5]] = tk.Button(self, text=notes[5], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[5]))
-        self.buttons[notes[5]].place(x=255, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[5]),
+                                           width=10)
+        self.buttons[notes[5]].place(x=20, y=300)
 
         # D# button
         self.buttons[notes[6]] = tk.Button(self, text=notes[6], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[6]))
-        self.buttons[notes[6]].place(x=305, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[6]),
+                                           width=10)
+        self.buttons[notes[6]].place(x=140, y=300)
 
         # E button
         self.buttons[notes[7]] = tk.Button(self, text=notes[7], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[7]))
-        self.buttons[notes[7]].place(x=355, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[7]),
+                                           width=10)
+        self.buttons[notes[7]].place(x=20, y=340)
 
         # F button
         self.buttons[notes[8]] = tk.Button(self, text=notes[8], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[8]))
-        self.buttons[notes[8]].place(x=405, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[8]),
+                                           width=10)
+        self.buttons[notes[8]].place(x=20, y=380)
 
         # F# button
         self.buttons[notes[9]] = tk.Button(self, text=notes[9], font='Courier 12', bg=buttonBkg,
-                                           command=lambda: self.noteButtonPressed(notes[9]))
-        self.buttons[notes[9]].place(x=455, y=200)
+                                           command=lambda: self.noteButtonPressed(notes[9]),
+                                           width=10)
+        self.buttons[notes[9]].place(x=140, y=380)
 
         # G button
         self.buttons[notes[10]] = tk.Button(self, text=notes[10], font='Courier 12', bg=buttonBkg,
-                                            command=lambda: self.noteButtonPressed(notes[10]))
-        self.buttons[notes[10]].place(x=505, y=200)
+                                            command=lambda: self.noteButtonPressed(notes[10]),
+                                           width=10)
+        self.buttons[notes[10]].place(x=20, y=420)
 
         # G# button
         self.buttons[notes[11]] = tk.Button(self, text=notes[11], font='Courier 12', bg=buttonBkg,
-                                            command=lambda: self.noteButtonPressed(notes[11]))
-        self.buttons[notes[11]].place(x=555, y=200)
+                                            command=lambda: self.noteButtonPressed(notes[11]),
+                                           width=10)
+        self.buttons[notes[11]].place(x=140, y=420)
 
     def noteButtonPressed(self, buttonNote):
         """
