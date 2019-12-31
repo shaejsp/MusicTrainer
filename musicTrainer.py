@@ -54,6 +54,8 @@ class Application(tk.Frame):
         """
         set up the window
         """
+        font = 'Courier 12'
+
         self.master.title("Music Trainer")
         self.pack(fill='both', expand=1)
 
@@ -62,12 +64,12 @@ class Application(tk.Frame):
         self.quitButton.place(x=5, y=5)
 
         # # creates the play note button
-        self.playButton = tk.Button(self, text='Play Note',  font='Courier 12', width=10,
+        self.playButton = tk.Button(self, text='Play Note', font=font, width=10,
                                     height=2, command=self.queue.play)
         self.playButton.place(x=20, y=100)
 
         # creates the play next button
-        self.playNextButton = tk.Button(self, text='Play Next', font='Courier 12',
+        self.playNextButton = tk.Button(self, text='Play Next', font=font,
                                         state='disabled', width=10, height=2,
                                         command=self.playNextPressed)
         self.playNextButton.place(x=140, y=100)
@@ -80,79 +82,79 @@ class Application(tk.Frame):
         # i = 11 when the loop ends, and in python i can still be accessed out of scope, so each
         # event handler routes to G# event handler
         # for i in range(len(notes)):
-        #     self.buttons[notes[i]] = tk.Button(self, text=notes[i], font='Courier 12',
+        #     self.buttons[notes[i]] = tk.Button(self, text=notes[i], font=font,
         #                                        bg=buttonBkg,
         #                                        command=lambda: self.noteButtonPressed(notes[i]))
         #     self.buttons[notes[i]].place(x=5 + (50*i), y=200)
 
         # A button
-        self.buttons[notes[0]] = tk.Button(self, text=notes[0], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[0]] = tk.Button(self, text=notes[0], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[0]),
                                            width=10)
         self.buttons[notes[0]].place(x=20, y=180)
 
         # A# button
-        self.buttons[notes[1]] = tk.Button(self, text=notes[1], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[1]] = tk.Button(self, text=notes[1], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[1]),
                                            width=10)
         self.buttons[notes[1]].place(x=140, y=180)
 
         # B button
-        self.buttons[notes[2]] = tk.Button(self, text=notes[2], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[2]] = tk.Button(self, text=notes[2], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[2]),
                                            width=10)
         self.buttons[notes[2]].place(x=20, y=220)
 
         # C button
-        self.buttons[notes[3]] = tk.Button(self, text=notes[3], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[3]] = tk.Button(self, text=notes[3], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[3]),
                                            width=10)
         self.buttons[notes[3]].place(x=20, y=260)
 
         # C# button
-        self.buttons[notes[4]] = tk.Button(self, text=notes[4], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[4]] = tk.Button(self, text=notes[4], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[4]),
                                            width=10)
         self.buttons[notes[4]].place(x=140, y=260)
 
         # D button
-        self.buttons[notes[5]] = tk.Button(self, text=notes[5], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[5]] = tk.Button(self, text=notes[5], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[5]),
                                            width=10)
         self.buttons[notes[5]].place(x=20, y=300)
 
         # D# button
-        self.buttons[notes[6]] = tk.Button(self, text=notes[6], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[6]] = tk.Button(self, text=notes[6], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[6]),
                                            width=10)
         self.buttons[notes[6]].place(x=140, y=300)
 
         # E button
-        self.buttons[notes[7]] = tk.Button(self, text=notes[7], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[7]] = tk.Button(self, text=notes[7], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[7]),
                                            width=10)
         self.buttons[notes[7]].place(x=20, y=340)
 
         # F button
-        self.buttons[notes[8]] = tk.Button(self, text=notes[8], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[8]] = tk.Button(self, text=notes[8], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[8]),
                                            width=10)
         self.buttons[notes[8]].place(x=20, y=380)
 
         # F# button
-        self.buttons[notes[9]] = tk.Button(self, text=notes[9], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[9]] = tk.Button(self, text=notes[9], font=font, bg=buttonBkg,
                                            command=lambda: self.noteButtonPressed(notes[9]),
                                            width=10)
         self.buttons[notes[9]].place(x=140, y=380)
 
         # G button
-        self.buttons[notes[10]] = tk.Button(self, text=notes[10], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[10]] = tk.Button(self, text=notes[10], font=font, bg=buttonBkg,
                                             command=lambda: self.noteButtonPressed(notes[10]),
                                            width=10)
         self.buttons[notes[10]].place(x=20, y=420)
 
         # G# button
-        self.buttons[notes[11]] = tk.Button(self, text=notes[11], font='Courier 12', bg=buttonBkg,
+        self.buttons[notes[11]] = tk.Button(self, text=notes[11], font=font, bg=buttonBkg,
                                             command=lambda: self.noteButtonPressed(notes[11]),
                                            width=10)
         self.buttons[notes[11]].place(x=140, y=420)
