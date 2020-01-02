@@ -3,8 +3,7 @@ from random import randint
 
 """
 TODO:
- - implement tracking for how many they got right
- - actually record the notes
+ - record the notes
  - design logo in photoshop
  - add ability to choose which notes you want to practice
  - add ability to limit to one octave, 3 octaves, 5, or 7 (acts as a multiplier for score)
@@ -53,6 +52,9 @@ class Application(tk.Frame):
         tk.Frame.__init__(self, master)
         self.master = master
         self.queue = NoteQueue()
+        self.firstTry = True
+        self.score = 0
+        self.total = 0
         self.initWindow()
 
     def initWindow(self):
@@ -177,8 +179,26 @@ class Application(tk.Frame):
         notesLabel = tk.Label(self, text='Notes', font=font)
         notesLabel.place(x=400, y=120)
 
+        # CHECK BOXES GO HERE
+
         octavesLabel = tk.Label(self, text='Octaves', font=font)
         octavesLabel.place(x=520, y=120)
+
+        # CHECK BOXES GO HERE
+
+        # this is the bar that keeps track of the score
+        self.scoreLabel = tk.Label(self, text='0/0', font=font)
+        self.scoreLabel.place(x=300, y=120)
+        scoreFrame = tk.Frame(master=self, width=50, height=600, bg='red')
+        scoreFrame.pack(expand=False)
+        wrongLabel = tk.Label(scoreFrame, text='', borderwidth=2, relief='solid', 
+                              width=8, height=20)
+        wrongLabel.pack(anchor='sw')
+
+        self.rightLabel = tk.Label(scoreFrame, borderwidth=2, relief='solid', width=8, 
+                                   height=0, anchor='sw')
+        # self.rightLabel.pack()
+        scoreFrame.place(x=300, y=145)
 
     def noteButtonPressed(self, buttonNote):
         """
@@ -194,15 +214,39 @@ class Application(tk.Frame):
             for b in self.buttons.values():
                 b.config(state='disabled')
             self.buttons[buttonNote].config(bg='green', state='normal')
+
+            self.total += 1
+
+            if self.firstTry:
+                self.score += 1
+            # call the function to redraw the green part of the label
+            self.redrawScoreBar()
         # else turn the pressed button red
         else:
+            self.firstTry = False
             self.buttons[buttonNote].config(bg=redBkg, state='disabled')
+
+
+    def redrawScoreBar(self):
+        """
+        calculate the coordinates for the green 'correct' bar and redraw the label that displays
+        the score
+        """
+        self.scoreLabel.config(text='{s}/{t}'.format(s=self.score, t=self.total))
+        percent = self.score/self.total
+        newHeight = int(percent*20)
+        self.rightLabel.config(height=newHeight, bg='green')
+        newY = int(15.25 * (20 - newHeight))  # 15.25 is height in pixels of 1 height unit
+        self.rightLabel.place(x=0, y=newY)
+
+        # each height unit is 21 pixels
 
     def playNextPressed(self):
         """
         called when the play next button is pressed, resets all of the note buttons and
         calls queue.next()
         """
+        self.firstTry = True
         for b in self.buttons.values():
             if b['bg'] != buttonBkg:
                 b.config(bg=buttonBkg)
