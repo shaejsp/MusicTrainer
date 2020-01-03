@@ -360,6 +360,10 @@ class Application(tk.Frame):
             # we removed the note
             if not self.queue.validNote(note):
                 self.queue.next()
+            self.buttons[note].config(state='disabled')
+        else:
+            # we added the note
+            self.buttons[note].config(state='normal')
 
 
     def playNextPressed(self):
