@@ -5,7 +5,6 @@ from random import randint
 TODO:
  - record the notes
  - design logo in photoshop
- - add ability to choose which notes you want to practice
  - add ability to limit to one octave, 3 octaves, 5, or 7 (acts as a multiplier for score)
  - actually implement the sound playing
  - MAYBE: add notes from guitar -> would be better as another
@@ -302,7 +301,7 @@ class Application(tk.Frame):
         self.scoreLabel.place(x=300, y=120)
         scoreFrame = tk.Frame(master=self, width=50, height=600, bg='red')
         scoreFrame.pack(expand=False)
-        wrongLabel = tk.Label(scoreFrame, text='', borderwidth=2, relief='solid', 
+        wrongLabel = tk.Label(scoreFrame, borderwidth=2, relief='solid', 
                               width=8, height=20)
         wrongLabel.pack(anchor='sw')
 
@@ -360,10 +359,10 @@ class Application(tk.Frame):
             # we removed the note
             if not self.queue.validNote(note):
                 self.queue.next()
-            self.buttons[note].config(state='disabled')
+            self.buttons[note].config(state='disabled', bg='#707070')
         else:
             # we added the note
-            self.buttons[note].config(state='normal')
+            self.buttons[note].config(state='normal', bg=buttonBkg)
 
 
     def playNextPressed(self):
@@ -373,9 +372,9 @@ class Application(tk.Frame):
         """
         self.firstTry = True
         for b in self.buttons.values():
-            if b['bg'] != buttonBkg:
+            if b['bg'] != buttonBkg and self.queue.validNote(b['text']):
                 b.config(bg=buttonBkg)
-            if b['state'] != 'normal':
+            if b['state'] != 'normal' and self.queue.validNote(b['text']):
                 b.config(state='normal')
         self.queue.next()
         self.playNextButton.config(state='disabled')
