@@ -291,10 +291,26 @@ class Application(tk.Frame):
         self.noteChecks[notes[11]].place(x=400, y=400)
         self.noteChecks[notes[11]].select()
 
-        octavesLabel = tk.Label(self, text='Octaves', font=font)
+        # octave check boxes
+        octavesLabel = tk.Label(self, text='# Octaves', font=font)
         octavesLabel.place(x=520, y=140)
 
-        # CHECK BOXES GO HERE
+        self.octaveChecks = {}
+
+        self.octaveChecks[1] = tk.Checkbutton(self, text='1', font=font, var=tk.IntVar(value=1)) #, 
+                                              # command=lambda: self.noteBoxChecked(1))
+        self.octaveChecks[1].place(x=520, y=180)
+        self.octaveChecks[1].select()
+
+        self.octaveChecks[3] = tk.Checkbutton(self, text='3', font=font, var=tk.IntVar(value=1)) #, 
+                                              # command=lambda: self.noteBoxChecked(3))
+        self.octaveChecks[3].place(x=520, y=200)
+        self.octaveChecks[3].select()
+
+        self.octaveChecks[5] = tk.Checkbutton(self, text='5', font=font, var=tk.IntVar(value=1)) #, 
+                                              # command=lambda: self.noteBoxChecked(5))
+        self.octaveChecks[5].place(x=520, y=220)
+        self.octaveChecks[5].select()
 
         # this is the bar that keeps track of the score
         self.scoreLabel = tk.Label(self, text='0/0', font=font)
