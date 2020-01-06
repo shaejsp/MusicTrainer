@@ -26,6 +26,7 @@ redBkg = '#bd3131'
 class NoteQueue():
     def __init__(self):
         self.noteSelection = notes.copy()
+        self.octaves = [1, 2, 3, 4, 5, 6, 7]
         self.note = 'Unassigned'
         self.next()  # randomly assigns first note
 
@@ -57,6 +58,22 @@ class NoteQueue():
             return -1
         else:  # add the note
             self.noteSelection.append(note)
+            return 1
+
+    def toggleOctave(self, octave):
+        """
+        remove or add an octave to the list of octaves
+
+        :param octave: the octave to be added or removed
+        :return: -1 if the octave was removed, 1 if the octave was added
+        """
+        if octave in self.octaves:
+            # remove it
+            self.octaves.remove(octave)
+            return -1
+        else:
+            # add the octave
+            self.octaves.append(octave)
             return 1
 
     def validNote(self, note):
@@ -292,7 +309,7 @@ class Application(tk.Frame):
         self.noteChecks[notes[11]].select()
 
         # octave check boxes
-        octavesLabel = tk.Label(self, text='# Octaves', font=font)
+        octavesLabel = tk.Label(self, text='Octaves', font=font)
         octavesLabel.place(x=520, y=140)
 
         self.octaveChecks = {}
@@ -302,15 +319,35 @@ class Application(tk.Frame):
         self.octaveChecks[1].place(x=520, y=180)
         self.octaveChecks[1].select()
 
-        self.octaveChecks[3] = tk.Checkbutton(self, text='3', font=font, var=tk.IntVar(value=1)) #, 
+        self.octaveChecks[2] = tk.Checkbutton(self, text='2', font=font, var=tk.IntVar(value=1)) #, 
                                               # command=lambda: self.noteBoxChecked(3))
-        self.octaveChecks[3].place(x=520, y=200)
+        self.octaveChecks[2].place(x=520, y=200)
+        self.octaveChecks[2].select()
+
+        self.octaveChecks[3] = tk.Checkbutton(self, text='3', font=font, var=tk.IntVar(value=1)) #, 
+                                              # command=lambda: self.noteBoxChecked(5))
+        self.octaveChecks[3].place(x=520, y=220)
         self.octaveChecks[3].select()
+
+        self.octaveChecks[4] = tk.Checkbutton(self, text='4', font=font, var=tk.IntVar(value=1)) #, 
+                                              # command=lambda: self.noteBoxChecked(5))
+        self.octaveChecks[4].place(x=520, y=240)
+        self.octaveChecks[4].select()
 
         self.octaveChecks[5] = tk.Checkbutton(self, text='5', font=font, var=tk.IntVar(value=1)) #, 
                                               # command=lambda: self.noteBoxChecked(5))
-        self.octaveChecks[5].place(x=520, y=220)
+        self.octaveChecks[5].place(x=520, y=260)
         self.octaveChecks[5].select()
+
+        self.octaveChecks[6] = tk.Checkbutton(self, text='6', font=font, var=tk.IntVar(value=1)) #, 
+                                              # command=lambda: self.noteBoxChecked(5))
+        self.octaveChecks[6].place(x=520, y=280)
+        self.octaveChecks[6].select()
+
+        self.octaveChecks[7] = tk.Checkbutton(self, text='7', font=font, var=tk.IntVar(value=1)) #, 
+                                              # command=lambda: self.noteBoxChecked(5))
+        self.octaveChecks[7].place(x=520, y=300)
+        self.octaveChecks[7].select()
 
         # this is the bar that keeps track of the score
         self.scoreLabel = tk.Label(self, text='0/0', font=font)
