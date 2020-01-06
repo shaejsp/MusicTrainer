@@ -5,7 +5,6 @@ from random import randint
 TODO:
  - record the notes
  - design logo in photoshop
- - add ability to limit to one octave, 3 octaves, 5, or 7 (acts as a multiplier for score)
  - actually implement the sound playing
  - MAYBE: add notes from guitar -> would be better as another
     proj for guessing where the notes go on the fretboard
@@ -410,7 +409,7 @@ class Application(tk.Frame):
         """
         if self.queue.toggleNote(note) < 0:
             # we removed the note
-            if not self.queue.validNote(note):
+            if not self.queue.validNote(self.queue.note):
                 self.queue.next()
             self.buttons[note].config(state='disabled', bg='#707070')
         else:
