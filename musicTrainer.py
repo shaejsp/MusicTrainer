@@ -1,5 +1,6 @@
 import tkinter as tk
 from random import randint
+import winsound as ws
 
 """
 TODO:
@@ -27,23 +28,29 @@ class NoteQueue():
         self.noteSelection = notes.copy()
         self.octaves = [1, 2, 3, 4, 5, 6, 7]
         self.note = 'Unassigned'
-        self.next()  # randomly assigns first note
+        self.freqs = {'C': 262, 'C#': 277, 'D': 294, 'D#': 311, 'E': 330, 'F': 349,
+                      'F#':370, 'G': 392, 'G#': 415, 'A': 440, 'A#': 466, 'B':494}
+        self.next(play=False)  # randomly assigns first note
 
     def play(self):
         """
         play a note
         """
+        ws.Beep(self.freqs[self.note], 300)
         print('playing: {n}'.format(n=self.note))
 
-    def next(self):
+    def next(self, play=True):
         """
         get a random note from the list of notes and play it
+
+        :param play: if True will play the sound, if False will not
         """
         pos = randint(0, len(self.noteSelection)-1)
         print('Position: {p}'.format(p=pos))
         print('NoteSelection: {p}'.format(p=self.noteSelection))
         self.note = self.noteSelection[pos]
-        self.play()
+        if play:
+            self.play()
 
     def toggleNote(self, note):
         """
@@ -77,7 +84,7 @@ class NoteQueue():
 
     def validNote(self, note):
         """
-        determine if a not is valid based on the possible notes 
+        determine if a not is valid based on the possible notes
 
         :param note: the note in question
         :return: a boolean, true if the note is valid, false otherwise
@@ -113,12 +120,12 @@ class Application(tk.Frame):
         logo.place(x=20, y=20)
 
         # creates the quit button
-        self.quitButton = tk.Button(self, text='Quit', font=font, width=int(buttonWidth/2), 
+        self.quitButton = tk.Button(self, text='Quit', font=font, width=int(buttonWidth/2),
                                     bg=redBkg, command=self.quit)
         self.quitButton.place(x=620, y=20)
 
         # # creates the play note button
-        self.playButton = tk.Button(self, text='Play Note', bg=blueButton, font=font, 
+        self.playButton = tk.Button(self, text='Play Note', bg=blueButton, font=font,
                                     width=buttonWidth, height=2, command=self.queue.play)
         self.playButton.place(x=20, y=100)
 
@@ -224,85 +231,85 @@ class Application(tk.Frame):
         self.noteChecks = {}
 
         # A checkbutton
-        self.noteChecks[notes[0]] = tk.Checkbutton(self, text=notes[0], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[0]] = tk.Checkbutton(self, text=notes[0], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[0]))
         self.noteChecks[notes[0]].place(x=400, y=180)
         self.noteChecks[notes[0]].select()
 
         # A# checkbutton
-        self.noteChecks[notes[1]] = tk.Checkbutton(self, text=notes[1], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[1]] = tk.Checkbutton(self, text=notes[1], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[1]))
         self.noteChecks[notes[1]].place(x=400, y=200)
         self.noteChecks[notes[1]].select()
 
         # B checkbutton
-        self.noteChecks[notes[2]] = tk.Checkbutton(self, text=notes[2], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[2]] = tk.Checkbutton(self, text=notes[2], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[2]))
         self.noteChecks[notes[2]].place(x=400, y=220)
         self.noteChecks[notes[2]].select()
 
         # C checkbutton
-        self.noteChecks[notes[3]] = tk.Checkbutton(self, text=notes[3], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[3]] = tk.Checkbutton(self, text=notes[3], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[3]))
         self.noteChecks[notes[3]].place(x=400, y=240)
         self.noteChecks[notes[3]].select()
 
         # C# checkbutton
-        self.noteChecks[notes[4]] = tk.Checkbutton(self, text=notes[4], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[4]] = tk.Checkbutton(self, text=notes[4], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[4]))
         self.noteChecks[notes[4]].place(x=400, y=260)
         self.noteChecks[notes[4]].select()
 
         # D checkbutton
-        self.noteChecks[notes[5]] = tk.Checkbutton(self, text=notes[5], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[5]] = tk.Checkbutton(self, text=notes[5], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[5]))
         self.noteChecks[notes[5]].place(x=400, y=280)
         self.noteChecks[notes[5]].select()
 
         # D# checkbutton
-        self.noteChecks[notes[6]] = tk.Checkbutton(self, text=notes[6], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[6]] = tk.Checkbutton(self, text=notes[6], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[6]))
         self.noteChecks[notes[6]].place(x=400, y=300)
         self.noteChecks[notes[6]].select()
 
         # E checkbutton
-        self.noteChecks[notes[7]] = tk.Checkbutton(self, text=notes[7], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[7]] = tk.Checkbutton(self, text=notes[7], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[7]))
         self.noteChecks[notes[7]].place(x=400, y=320)
         self.noteChecks[notes[7]].select()
 
         # F checkbutton
-        self.noteChecks[notes[8]] = tk.Checkbutton(self, text=notes[8], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[8]] = tk.Checkbutton(self, text=notes[8], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[8]))
         self.noteChecks[notes[8]].place(x=400, y=340)
         self.noteChecks[notes[8]].select()
 
         # F# checkbutton
-        self.noteChecks[notes[9]] = tk.Checkbutton(self, text=notes[9], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[9]] = tk.Checkbutton(self, text=notes[9], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[9]))
         self.noteChecks[notes[9]].place(x=400, y=360)
         self.noteChecks[notes[9]].select()
 
         # G checkbutton
-        self.noteChecks[notes[10]] = tk.Checkbutton(self, text=notes[10], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[10]] = tk.Checkbutton(self, text=notes[10], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[10]))
         self.noteChecks[notes[10]].place(x=400, y=380)
         self.noteChecks[notes[10]].select()
 
         # G# checkbutton
-        self.noteChecks[notes[11]] = tk.Checkbutton(self, text=notes[11], font=font, 
-                                                   var=tk.IntVar(value=1), 
+        self.noteChecks[notes[11]] = tk.Checkbutton(self, text=notes[11], font=font,
+                                                   var=tk.IntVar(value=1),
                                                    command=lambda: self.noteBoxChecked(notes[11]))
         self.noteChecks[notes[11]].place(x=400, y=400)
         self.noteChecks[notes[11]].select()
@@ -313,37 +320,37 @@ class Application(tk.Frame):
 
         self.octaveChecks = {}
 
-        self.octaveChecks[1] = tk.Checkbutton(self, text='1', font=font, var=tk.IntVar(value=1)) #, 
+        self.octaveChecks[1] = tk.Checkbutton(self, text='1', font=font, var=tk.IntVar(value=1)) #,
                                               # command=lambda: self.noteBoxChecked(1))
         self.octaveChecks[1].place(x=520, y=180)
         self.octaveChecks[1].select()
 
-        self.octaveChecks[2] = tk.Checkbutton(self, text='2', font=font, var=tk.IntVar(value=1)) #, 
+        self.octaveChecks[2] = tk.Checkbutton(self, text='2', font=font, var=tk.IntVar(value=1)) #,
                                               # command=lambda: self.noteBoxChecked(3))
         self.octaveChecks[2].place(x=520, y=200)
         self.octaveChecks[2].select()
 
-        self.octaveChecks[3] = tk.Checkbutton(self, text='3', font=font, var=tk.IntVar(value=1)) #, 
+        self.octaveChecks[3] = tk.Checkbutton(self, text='3', font=font, var=tk.IntVar(value=1)) #,
                                               # command=lambda: self.noteBoxChecked(5))
         self.octaveChecks[3].place(x=520, y=220)
         self.octaveChecks[3].select()
 
-        self.octaveChecks[4] = tk.Checkbutton(self, text='4', font=font, var=tk.IntVar(value=1)) #, 
+        self.octaveChecks[4] = tk.Checkbutton(self, text='4', font=font, var=tk.IntVar(value=1)) #,
                                               # command=lambda: self.noteBoxChecked(5))
         self.octaveChecks[4].place(x=520, y=240)
         self.octaveChecks[4].select()
 
-        self.octaveChecks[5] = tk.Checkbutton(self, text='5', font=font, var=tk.IntVar(value=1)) #, 
+        self.octaveChecks[5] = tk.Checkbutton(self, text='5', font=font, var=tk.IntVar(value=1)) #,
                                               # command=lambda: self.noteBoxChecked(5))
         self.octaveChecks[5].place(x=520, y=260)
         self.octaveChecks[5].select()
 
-        self.octaveChecks[6] = tk.Checkbutton(self, text='6', font=font, var=tk.IntVar(value=1)) #, 
+        self.octaveChecks[6] = tk.Checkbutton(self, text='6', font=font, var=tk.IntVar(value=1)) #,
                                               # command=lambda: self.noteBoxChecked(5))
         self.octaveChecks[6].place(x=520, y=280)
         self.octaveChecks[6].select()
 
-        self.octaveChecks[7] = tk.Checkbutton(self, text='7', font=font, var=tk.IntVar(value=1)) #, 
+        self.octaveChecks[7] = tk.Checkbutton(self, text='7', font=font, var=tk.IntVar(value=1)) #,
                                               # command=lambda: self.noteBoxChecked(5))
         self.octaveChecks[7].place(x=520, y=300)
         self.octaveChecks[7].select()
@@ -353,11 +360,11 @@ class Application(tk.Frame):
         self.scoreLabel.place(x=300, y=120)
         scoreFrame = tk.Frame(master=self, width=50, height=600, bg='red')
         scoreFrame.pack(expand=False)
-        wrongLabel = tk.Label(scoreFrame, borderwidth=2, relief='solid', 
+        wrongLabel = tk.Label(scoreFrame, borderwidth=2, relief='solid',
                               width=8, height=20)
         wrongLabel.pack(anchor='sw')
 
-        self.rightLabel = tk.Label(scoreFrame, borderwidth=2, relief='solid', width=8, 
+        self.rightLabel = tk.Label(scoreFrame, borderwidth=2, relief='solid', width=8,
                                    height=0, anchor='sw')
         # self.rightLabel.pack()
         scoreFrame.place(x=300, y=145)
