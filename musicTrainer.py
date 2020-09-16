@@ -1,5 +1,6 @@
 import tkinter as tk
 from random import randint
+import time
 import winsound as ws
 
 """
@@ -36,7 +37,6 @@ class NoteQueue():
         """
         play a note
         """
-        ws.Beep(self.freqs[self.note], 300)
         print('playing: {n}'.format(n=self.note))
 
     def next(self, play=True):
@@ -361,11 +361,11 @@ class Application(tk.Frame):
         scoreFrame = tk.Frame(master=self, width=50, height=600, bg='red')
         scoreFrame.pack(expand=False)
         wrongLabel = tk.Label(scoreFrame, borderwidth=2, relief='solid',
-                              width=8, height=20)
+                              width=20, height=100, font='Courier 2')
         wrongLabel.pack(anchor='sw')
 
-        self.rightLabel = tk.Label(scoreFrame, borderwidth=2, relief='solid', width=8,
-                                   height=0, anchor='sw')
+        self.rightLabel = tk.Label(scoreFrame, borderwidth=2, relief='solid', width=20,
+                                   height=0, anchor='sw', font='Courier 2')
         # self.rightLabel.pack()
         scoreFrame.place(x=300, y=145)
 
@@ -403,9 +403,9 @@ class Application(tk.Frame):
         """
         self.scoreLabel.config(text='{s}/{t}'.format(s=self.score, t=self.total))
         percent = self.score/self.total
-        newHeight = int(percent*20)
+        newHeight = int(percent*100)
         self.rightLabel.config(height=newHeight, bg='green')
-        newY = int(15.25 * (20 - newHeight))  # 15.25 is height in pixels of 1 height unit
+        newY = int(1 * (100 - newHeight))  # 15.25 is height in pixels of 1 height unit
         self.rightLabel.place(x=0, y=newY)
 
     def noteBoxChecked(self, note):
